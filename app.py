@@ -204,6 +204,6 @@ def main():
 
 
 if __name__ == "__main__":
-    username = '18920802618'
-    password = 'hahaha1230.'
+    username = '##########'
+    password = '##########'
     main()
