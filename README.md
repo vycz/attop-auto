@@ -1,11 +1,11 @@
 # Attop-Auto
 一个python实现的至善网刷课软件,主要是理解到了dwr框架下数据的交换
-## environment
+## Environment
 > python 版本:3.6
 > 系统: mac os
 > 依赖: requests
 
-## usage
+## Usage
 1.  通过`http://www.attop.com/wk/learn.htm?id=48`获得起始和结尾jid
     
     ```
@@ -33,16 +33,6 @@
 - [ ] 任务一  `自动获取网站页数`
 - [x] 任务二  `暂无`
 
-## attention 
+## Attention 
 1.  视频时间每次必须间隔为15s,不然返回错误
 2.  课程评价时间不可短于3S
-
-
-    
-
-
-
-
-
-
-
