@@ -15,8 +15,8 @@
     http://www.attop.com/wk/learn.htm?id=48&jid=1013
     1013为终点
     ```
-将数值对应填入
-    
+    将数值对应填入
+
     ```
     if __name__ == "__main__":
     username = '##########'
