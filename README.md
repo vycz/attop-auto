@@ -1,5 +1,5 @@
 # Attop-Auto
-一个python实现的至善网刷课软件,主要是理解到了dwr框架下数据的交互
+一个python实现的至善网刷课软件,主要是理解到了dwr框架下数据的交互,并且可自动跳过验证码验证
 ## Environment
 > python 版本:3.6
 > 系统: mac os
