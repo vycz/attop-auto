@@ -7,7 +7,6 @@ import math
 import re
 import random
 import time
-from bs4 import BeautifulSoup
 import argparse
 
 def tokenify(number):
