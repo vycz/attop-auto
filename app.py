@@ -8,6 +8,21 @@ import re
 import random
 import time
 import argparse
+from urllib.parse import quote
+
+
+def answerdata():
+    data = {}
+    file = open("value.txt", 'r')
+    while True:
+        line = file.readline()
+        if not line:
+            break
+        sp = line.split('-')
+        data[sp[0]] = sp[1]
+    return data
+
+
 
 def tokenify(number):
     tokenbuf = []
@@ -182,14 +197,33 @@ class attop(object):
         )
         print(sess.text)
 
-    # def get_pages(self, pageid):
-    #     url = 'http://www.attop.com/wk/learn.htm?id='+pageid
-    #     self.headers['Referer']= 'http://www.attop.com/user/study_index.htm'
-    #     sess = self.session.get(
-    #         url,
-    #         headers=self.headers)
-    #     soup = BeautifulSoup(sess.text)
-    #     book_list = soup.select("li[class='nHalf']")
+    def autoans(self,page,answers):
+        url = 'http://www.attop.com/js/ajax/call/plaincall/zsClass.dotAjax.dwr'
+        data = {
+            'callCount': '1',
+            'windowName': '',
+            'c0-scriptName': 'zsClass',
+            'c0-methodName': 'dotAjax',
+            'c0-id': '0',
+            'c0-param0': 'string:doSubmitWkXtAll',
+            'c0-e1': 'number:48', #课程号
+            'c0-e2': 'number:{0}'.format(page),
+            'c0-e3': 'string:{0}'.format(answers),
+            'c0-param1': 'Object_Object:{bid:reference:c0-e1, jid:reference:c0-e2, msg:reference:c0-e3}',
+            'c0-param2': 'string:doCommonReturn',
+            'batchId': '27',
+            'instanceId': '0',
+            'page': '%2Fwk%2Flearn.htm%3Fid%3D48%26jid%3D{0}'.format(page),
+            'scriptSessionId': ssid(self.dwrsessid)
+        }
+        sess = self.session.post(
+            url,
+            headers=self.headers,
+            data=data
+        )
+        print(sess.text)
+
+
         
 
 
@@ -213,8 +247,11 @@ def main():
                 at.dovideo(id, batchid)
                 time.sleep(15)
 
-    if options.mode == 0 or options.mode ==3:
+    if options.mode == 0 or options.mode == 3:
         #刷题
+        answer = answerdata()
+        for i in range(993,1013):
+            at.autoans(i,quote(answer[str(i)]))
         pass
 
 
@@ -224,6 +261,6 @@ if __name__ == "__main__":
     parser.add_argument('-p', '--password', help='attop password', default='')
     parser.add_argument('-s', '--start', help='start page', default=0,type=int)
     parser.add_argument('-e', '--end', help='end page', default=0,type=int)
-    parser.add_argument('-m', '--mode', help='1为刷评价,2为刷学习时长,3为刷题,默认全刷', default=0,type=int)
+    parser.add_argument('-m', '--mode', help='1为刷评价,2为刷学习时长,3为刷题,默认全刷', default=0, type=int)
     options = parser.parse_args()
     main()
