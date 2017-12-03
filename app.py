@@ -250,7 +250,7 @@ def main():
     if options.mode == 0 or options.mode == 3:
         #刷题
         answer = answerdata()
-        for i in range(options.start, options.end):
+        for i in range(options.start, options.end+1):
             at.autoans(i,quote(answer[str(i)]))
         pass
 
