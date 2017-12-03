@@ -7,7 +7,8 @@ import math
 import re
 import random
 import time
-
+from bs4 import BeautifulSoup
+import argparse
 
 def tokenify(number):
     tokenbuf = []
@@ -85,8 +86,8 @@ class attop(object):
             'c0-methodName': 'coreAjax',
             'c0-id': '0',
             'c0-param0': 'string:loginWeb',
-            'c0-e1': 'string:%s' % username,
-            'c0-e2': 'string:%s' % password,
+            'c0-e1': 'string:%s' % options.username,
+            'c0-e2': 'string:%s' % options.password,
             'c0-e3': 'string:%s' % str(rand),
             'c0-e4': 'number:2',
             'c0-param1': 'Object_Object:{username:reference:c0-e1, password:reference:c0-e2, rand:reference:c0-e3, autoflag:reference:c0-e4}',
@@ -182,8 +183,19 @@ class attop(object):
         )
         print(sess.text)
 
+    def get_pages(self, pageid):
+        url = 'http://www.attop.com/wk/learn.htm?id='+pageid
+        self.headers['Referer']= 'http://www.attop.com/user/study_index.htm'
+        sess = self.session.get(
+            url,
+            headers=self.headers)
+        soup = BeautifulSoup(sess.text)
+        book_list = soup.select("li[class='nHalf']")
+        
+
 
 def main():
+
     at = attop()
     at.login()
 
@@ -196,7 +208,7 @@ def main():
     #观看时长
     #http://www.attop.com/wk/learn.htm?id=48&jid=993
     #http://www.attop.com/wk/learn.htm?id=48&jid=1013
-    for id in range(993, 1013):
+    for id in range(options.start, options.end):
         #每批15秒 大概每章10分钟
         for batchid in range(0, 40):
             at.dovideo(id, batchid)
@@ -204,6 +216,11 @@ def main():
 
 
 if __name__ == "__main__":
-    username = '##########'
-    password = '##########'
+    parser = argparse.ArgumentParser(description='to login attop')
+    parser.add_argument('-u', '--username', help='attop username', default='')
+    parser.add_argument('-p', '--password', help='attop password', default='')
+    parser.add_argument('-s', '--start', help='start page', default=0)
+    parser.add_argument('-e', '--end', help='end page', default=0)
+
+    options = parser.parse_args()
     main()
