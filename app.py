@@ -182,14 +182,14 @@ class attop(object):
         )
         print(sess.text)
 
-    def get_pages(self, pageid):
-        url = 'http://www.attop.com/wk/learn.htm?id='+pageid
-        self.headers['Referer']= 'http://www.attop.com/user/study_index.htm'
-        sess = self.session.get(
-            url,
-            headers=self.headers)
-        soup = BeautifulSoup(sess.text)
-        book_list = soup.select("li[class='nHalf']")
+    # def get_pages(self, pageid):
+    #     url = 'http://www.attop.com/wk/learn.htm?id='+pageid
+    #     self.headers['Referer']= 'http://www.attop.com/user/study_index.htm'
+    #     sess = self.session.get(
+    #         url,
+    #         headers=self.headers)
+    #     soup = BeautifulSoup(sess.text)
+    #     book_list = soup.select("li[class='nHalf']")
         
 
 
