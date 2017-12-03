@@ -6,7 +6,7 @@
 > 依赖: requests
 
 ## Usage
-1.  通过`http://www.attop.com/wk/learn.htm?id=48`获得起始和结尾jid
+    通过`http://www.attop.com/wk/learn.htm?id=48`获得起始和结尾jid
     
     ```
     列如:
@@ -17,22 +17,13 @@
     ```
     将数值对应填入
 
-    ```
-    if __name__ == "__main__":
-    username = '##########'
-    password = '##########'
-    start = 0
-    end = 0
-    main()
-    ```
-    
-2.  对应填入账号(username),密码(password)
-3.  运行 app.py
+    `` python app.py -u (账号) -p (密码) -s (开始id,列如993) -e (结束id,列如1013) ``
+    运行 app.py
 
 ## Task
 - [ ] 任务一  `自动获取网站页数`
 - [x] 任务二  `暂无`
 
 ## Attention 
-1.  视频时间每次必须间隔为15s,不然返回错误
+1.  视频时间每次必须间隔为15s
 2.  课程评价时间不可短于3S
