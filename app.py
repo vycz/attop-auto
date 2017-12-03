@@ -197,21 +197,25 @@ def main():
 
     at = attop()
     at.login()
+    if options.mode == 0 or options.mode == 1:
+        #完成教程评价
+        for id in range(3500,3800):
+            print("ID:" + str(id))
+            at.doass(id)
+            time.sleep(3)
+    if options.mode == 0 or options.mode == 2:
+        #观看时长
+        #http://www.attop.com/wk/learn.htm?id=48&jid=993
+        #http://www.attop.com/wk/learn.htm?id=48&jid=1013
+        for id in range(options.start, options.end):
+            #每批15秒 大概每章10分钟
+            for batchid in range(0, 40):
+                at.dovideo(id, batchid)
+                time.sleep(15)
 
-    #完成教程评价
-    for id in range(3500,3800):
-        print("ID:" + str(id))
-        at.doass(id)
-        time.sleep(3)
-
-    #观看时长
-    #http://www.attop.com/wk/learn.htm?id=48&jid=993
-    #http://www.attop.com/wk/learn.htm?id=48&jid=1013
-    for id in range(options.start, options.end):
-        #每批15秒 大概每章10分钟
-        for batchid in range(0, 40):
-            at.dovideo(id, batchid)
-            time.sleep(15)
+    if options.mode == 0 or options.mode ==3:
+        #刷题
+        pass
 
 
 if __name__ == "__main__":
@@ -220,6 +224,6 @@ if __name__ == "__main__":
     parser.add_argument('-p', '--password', help='attop password', default='')
     parser.add_argument('-s', '--start', help='start page', default=0)
     parser.add_argument('-e', '--end', help='end page', default=0)
-
+    parser.add_argument('-m', '--mode', help='1为刷评价,2为刷学习时长,3为刷题,默认全刷', default=0)
     options = parser.parse_args()
     main()
