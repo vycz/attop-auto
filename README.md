@@ -17,7 +17,13 @@
     ```
     将数值对应填入
 
-    `` python app.py -u (账号) -p (密码) -s (开始id,列如993) -e (结束id,列如1013) ``
+    ``` python app.py -u (账号) -p (密码) -s (开始id,列如993) -e (结束id,列如1013) -m (模式)
+    ('-u', '--username', help='attop username', default='')
+    ('-p', '--password', help='attop password', default='')
+    ('-s', '--start', help='start page', default=0)
+    ('-e', '--end', help='end page', default=0)
+    ('-m', '--mode', help='1为刷评价,2为刷学习时长,3为刷题,默认全刷', default=0)
+    ```
     运行 app.py
 
 ## Task
