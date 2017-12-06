@@ -23,7 +23,6 @@ def answerdata():
     return data
 
 
-
 def tokenify(number):
     tokenbuf = []
     charmap = "1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ*$"
@@ -81,7 +80,7 @@ class attop(object):
 
         # 得到必要参数
         self.dwrsessid = re.search(r'[0-9a-zA-Z*$]{27}', sess.text).group(0)
-        requests.utils.add_dict_to_cookiejar(self.session.cookies, {'DWRSESSIONID' : self.dwrsessid})
+        requests.utils.add_dict_to_cookiejar(self.session.cookies, {'DWRSESSIONID': self.dwrsessid})
         imgheaders = {
             'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36',
             'Accept': 'image/webp,image/apng,image/*,*/*;q=0.8',
@@ -167,12 +166,12 @@ class attop(object):
         elif status_code == '131':
             print("已阅读过")
 
-        print('状态码:'+status_code)
+        print('状态码:' + status_code)
         return True
 
     def dovideo(self, pageid, batchid):
         url = 'http://www.attop.com/js/ajax/call/plaincall/zsClass.commonAjax.dwr'
-        self.headers['Referer']= 'http://www.attop.com/wk/learn.htm?id=48&jid={0}'.format(pageid)
+        self.headers['Referer'] = 'http://www.attop.com/wk/learn.htm?id=48&jid={0}'.format(pageid)
         scriptSessionId = ssid(self.dwrsessid)
         data = {
             'callCount': '1',
@@ -197,7 +196,7 @@ class attop(object):
         )
         print(sess.text)
 
-    def autoans(self,page,answers):
+    def autoans(self, page, answers):
         url = 'http://www.attop.com/js/ajax/call/plaincall/zsClass.dotAjax.dwr'
         data = {
             'callCount': '1',
@@ -206,7 +205,7 @@ class attop(object):
             'c0-methodName': 'dotAjax',
             'c0-id': '0',
             'c0-param0': 'string:doSubmitWkXtAll',
-            'c0-e1': 'number:48', #课程号
+            'c0-e1': 'number:48',  # 课程号
             'c0-e2': 'number:{0}'.format(page),
             'c0-e3': 'string:{0}'.format(answers),
             'c0-param1': 'Object_Object:{bid:reference:c0-e1, jid:reference:c0-e2, msg:reference:c0-e3}',
@@ -224,34 +223,30 @@ class attop(object):
         print(sess.text)
 
 
-        
-
-
 def main():
-
     at = attop()
     at.login()
     if options.mode == 0 or options.mode == 1:
-        #完成教程评价
-        for id in range(3500,3800):
+        # 完成教程评价
+        for id in range(3500, 3800):
             print("ID:" + str(id))
             at.doass(id)
             time.sleep(3)
     if options.mode == 0 or options.mode == 2:
-        #观看时长
-        #http://www.attop.com/wk/learn.htm?id=48&jid=993
-        #http://www.attop.com/wk/learn.htm?id=48&jid=1013
+        # 观看时长
+        # http://www.attop.com/wk/learn.htm?id=48&jid=993
+        # http://www.attop.com/wk/learn.htm?id=48&jid=1013
         for id in range(options.start, options.end):
-            #每批15秒 大概每章10分钟
+            # 每批15秒 大概每章10分钟
             for batchid in range(0, 40):
                 at.dovideo(id, batchid)
                 time.sleep(15)
 
     if options.mode == 0 or options.mode == 3:
-        #刷题
+        # 刷题
         answer = answerdata()
-        for i in range(options.start, options.end+1):
-            at.autoans(i,quote(answer[str(i)]))
+        for i in range(options.start, options.end + 1):
+            at.autoans(i, quote(answer[str(i)]))
         pass
 
 
@@ -259,8 +254,8 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='to login attop')
     parser.add_argument('-u', '--username', help='attop username', default='')
     parser.add_argument('-p', '--password', help='attop password', default='')
-    parser.add_argument('-s', '--start', help='start page', default=0,type=int)
-    parser.add_argument('-e', '--end', help='end page', default=0,type=int)
+    parser.add_argument('-s', '--start', help='start page', default=0, type=int)
+    parser.add_argument('-e', '--end', help='end page', default=0, type=int)
     parser.add_argument('-m', '--mode', help='1为刷评价,2为刷学习时长,3为刷题,默认全刷', default=0, type=int)
     options = parser.parse_args()
     main()
